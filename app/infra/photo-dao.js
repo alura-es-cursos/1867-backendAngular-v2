@@ -25,6 +25,8 @@ class PhotoDao {
 
     listAllFromUser(userName, page) {
 
+        console.log('/////', userName)
+
         const from = (page - 1) * maxRows;
 
         let limitQuery = '';
@@ -57,6 +59,7 @@ class PhotoDao {
                         console.log(err);
                         return reject('Can`t list photos');
                     }
+                    console.log(photos)
                     console.log('photos retornadas');
                     resolve(photos);
                 });
@@ -215,7 +218,7 @@ class PhotoDao {
     }
 
     likeById(photoId, userId) {
-        
+
         return new Promise((resolve, reject) => this._db.run(
             `
             INSERT OR IGNORE INTO like 
@@ -224,7 +227,7 @@ class PhotoDao {
                 (?, ?) 
             `,
             [photoId, userId],
-            function(err) {
+            function (err) {
                 if (err) {
                     console.log(err);
                     return reject('Cant like photo');
